@@ -26,6 +26,28 @@ def find_smallest_positive(xs):
     >>> find_smallest_positive([-3, -2, -1]) is None
     True
     '''
+    left = 0
+    right = len(xs)-1
+    def go(left, right):
+        mid = (left+right)//2
+        if 0 == xs[mid]:
+            return mid+1
+        if left == right:
+            if xs[mid] > 0:
+                return mid
+            else:
+                return None
+        if 0 < xs[mid]:
+            return go(left, mid-1)
+        if 0 > xs[mid]:
+            return go(mid+1, right)
+
+    if len(xs) == 0:
+        return None
+    if xs[0] > 0:
+        return 0
+    else:
+        return go(left, right)
 
 
 def count_repeats(xs, x):
@@ -52,6 +74,47 @@ def count_repeats(xs, x):
     >>> count_repeats([3, 2, 1], 4)
     0
     '''
+    left = 0
+    right = len(xs) - 1
+
+    def fxOne(left,right):
+        mid = (left + right)//2
+        if xs[mid] == x:    
+            if mid == 0 or xs[mid-1] > x: 
+                return mid
+            else:
+                return fxOne(left, mid-1)
+
+        if left == right:    
+            return None
+        if x > xs[mid]:   
+            return fxOne(left, mid -1)
+        if x < xs[mid]:
+            return fxOne(mid + 1, right)
+
+    def fxTwo(left, right):
+        mid = (left+ right)//2
+        if xs[mid] == x:
+            if mid == (len(xs)-1) or x > xs[mid+1]:
+                return mid
+            else:
+                return fxTwo(mid + 1, right)
+        if left == right:
+            return None
+        if xs[mid] > x:
+            return fxTwo(mid + 1, right)
+        if x > xs[mid]:
+            return fxTwo(left, mid-1)
+
+    if xs == []:
+        return 0
+    firstOne = fxOne(left, right)
+    secondOne = fxTwo(left, right)
+
+    if firstOne == None or secondOne == None:
+        return 0
+    else:
+        return secondOne - firstOne + 1
 
 
 def argmin(f, lo, hi, epsilon=1e-3):
@@ -87,6 +150,19 @@ def argmin(f, lo, hi, epsilon=1e-3):
     >>> argmin(lambda x: (x-5)**2, -20, 0)
     -0.00016935087808430278
     '''
+    low = lo
+    high = hi
+    def go(low, high):
+        m1 = low + (high - low)/10
+        m2 = low + (high- low)/5
+        if high - low < epsilon:
+            return high
+        if f(m1) > f(m2):
+            return go(m1, high)
+        if f(m1) < f(m2):
+            return go(low, m2)
+    
+    return go(low,high)
 
 
 ################################################################################
