@@ -204,8 +204,7 @@ def test__argmin_10():
 def test__find_smallest_positive_runtime():
     seconds = timeit.timeit(
         'find_smallest_positive(xs)',
-        'from binary_search import
-        find_smallest_positive; xs=list(range(-100000, 100000, 1))'
+        'from binary_search import find_smallest_positive; xs=list(range(-100000, 100000, 1))'
         )
     print('seconds=', seconds)
     return True
