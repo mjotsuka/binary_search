@@ -29,21 +29,21 @@ def find_smallest_positive(xs):
     True
     '''
     left = 0
-    right = len(xs)-1
+    right = len(xs) - 1
 
     def go(left, right):
-        mid = (left+right)//2
+        mid = (left + right) // 2
         if 0 == xs[mid]:
-            return mid+1
+            return mid + 1
         if left == right:
             if xs[mid] > 0:
                 return mid
             else:
                 return None
         if 0 < xs[mid]:
-            return go(left, mid-1)
+            return go(left, mid - 1)
         if 0 > xs[mid]:
-            return go(mid+1, right)
+            return go(mid + 1, right)
 
     if len(xs) == 0:
         return None
@@ -80,44 +80,44 @@ def count_repeats(xs, x):
     left = 0
     right = len(xs) - 1
 
-    def fxOne(left, right):
-        mid = (left + right)//2
+    def fxone(left, right):
+        mid = (left + right) // 2
         if xs[mid] == x:
-            if mid == 0 or xs[mid-1] > x:
+            if mid == 0 or xs[mid - 1] > x:
                 return mid
             else:
-                return fxOne(left, mid-1)
+                return fxone(left, mid - 1)
 
         if left == right:
             return None
         if x > xs[mid]:
-            return fxOne(left, mid - 1)
+            return fxone(left, mid - 1)
         if x < xs[mid]:
-            return fxOne(mid + 1, right)
+            return fxone(mid + 1, right)
 
-    def fxTwo(left, right):
+    def fxtwo(left, right):
         mid = (left + right) // 2
         if xs[mid] == x:
-            if mid == (len(xs)-1) or x > xs[mid+1]:
+            if mid == (len(xs) - 1) or x > xs[mid + 1]:
                 return mid
             else:
-                return fxTwo(mid + 1, right)
+                return fxtwo(mid + 1, right)
         if left == right:
             return None
         if xs[mid] > x:
-            return fxTwo(mid + 1, right)
+            return fxtwo(mid + 1, right)
         if x > xs[mid]:
-            return fxTwo(left, mid-1)
+            return fxtwo(left, mid - 1)
 
     if xs == []:
         return 0
-    firstOne = fxOne(left, right)
-    secondOne = fxTwo(left, right)
+    firstone = fxone(left, right)
+    secondone = fxtwo(left, right)
 
-    if firstOne is None or secondOne is None:
+    if firstone is None or secondone is None:
         return 0
     else:
-        return secondOne - firstOne + 1
+        return secondone - firstone + 1
 
 
 def argmin(f, lo, hi, epsilon=1e-3):
